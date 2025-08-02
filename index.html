@@ -13,11 +13,34 @@
       <div class="chatbot-header">
         <div class="avatar-container">
           <div class="avatar-circle">
-            <span class="avatar-initials">BL</span>
+            <div class="default-avatar">
+              <svg width="60" height="60" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Face -->
+                <circle cx="50" cy="45" r="35" fill="#F4C2A1" stroke="#E8B4A0" stroke-width="2"/>
+                <!-- Hair -->
+                <path d="M20 35 Q25 15 50 20 Q75 15 80 35 Q75 25 50 25 Q25 25 20 35 Z" fill="#8B4513"/>
+                <!-- Eyes -->
+                <circle cx="40" cy="40" r="3" fill="#2C1810"/>
+                <circle cx="60" cy="40" r="3" fill="#2C1810"/>
+                <circle cx="41" cy="39" r="1" fill="#FFFFFF"/>
+                <circle cx="61" cy="39" r="1" fill="#FFFFFF"/>
+                <!-- Eyebrows -->
+                <path d="M35 35 Q40 33 45 35" stroke="#8B4513" stroke-width="2" fill="none"/>
+                <path d="M55 35 Q60 33 65 35" stroke="#8B4513" stroke-width="2" fill="none"/>
+                <!-- Nose -->
+                <ellipse cx="50" cy="48" rx="2" ry="3" fill="#E8B4A0"/>
+                <!-- Mouth -->
+                <path d="M45 55 Q50 60 55 55" stroke="#C4756B" stroke-width="2" fill="none"/>
+                <!-- Neck -->
+                <rect x="45" y="75" width="10" height="15" fill="#F4C2A1"/>
+                <!-- Shoulders -->
+                <ellipse cx="50" cy="95" rx="25" ry="8" fill="#4A90E2"/>
+              </svg>
+            </div>
           </div>
           <div class="avatar-info">
             <h2 class="avatar-name">Miss Bukola Lukan</h2>
-            <p class="avatar-status">AI Assistant</p>
+            <p class="avatar-status">Professional AI Assistant</p>
           </div>
         </div>
       </div>
@@ -27,7 +50,7 @@
         <div class="chat-messages" id="chatMessages">
           <div class="message ai-message">
             <div class="message-content">
-              <p>Hello! I'm Miss Bukola Lukan, your AI assistant. How can I help you today?</p>
+              <p>Good day! I'm Miss Bukola Lukan, your professional AI assistant. I'm here to provide thoughtful guidance, creative solutions, and expert assistance across a wide range of topics. How may I support you today?</p>
             </div>
             <div class="message-time">Just now</div>
           </div>
@@ -40,11 +63,16 @@
           <input 
             type="text" 
             id="messageInput" 
-            placeholder="Type your message here..."
+            placeholder="Share your thoughts, questions, or challenges..."
             autocomplete="off"
           />
           <button class="mic-button" id="micButton" title="Voice Input">
-            🎙️
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"/>
+              <path d="M19 10v2a7 7 0 0 1-14 0v-2"/>
+              <line x1="12" y1="19" x2="12" y2="23"/>
+              <line x1="8" y1="23" x2="16" y2="23"/>
+            </svg>
           </button>
           <button class="send-button" id="sendButton" title="Send Message">
             <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
@@ -62,14 +90,14 @@
           <span></span>
           <span></span>
         </div>
-        <p>Miss Bukola is thinking...</p>
+        <p>Analyzing and formulating response...</p>
       </div>
     </div>
 
     <!-- Footer with Encrypted Contact -->
     <footer class="chatbot-footer">
       <div class="footer-content">
-        <p class="footer-text">© 2025 Miss Bukola Lukan AI Assistant</p>
+        <p class="footer-text">© 2025 Miss Bukola Lukan - Advanced AI Assistant</p>
         <div class="encrypted-contact" id="encryptedContact"></div>
       </div>
     </footer>

@@ -35,10 +35,10 @@ class ChatbotApp {
       }
       
       this.initializationComplete = true;
-      console.log('✅ Miss Bukola Lukan is ready!');
+      console.log('Miss Bukola Lukan is ready!');
       
     } catch (error) {
-      console.error('❌ Initialization failed:', error);
+      console.error('Initialization failed:', error);
       this.showConfigurationError(error);
     }
   }
@@ -100,7 +100,7 @@ class ChatbotApp {
       await this.speakMessage(greetingMessage);
       
     } catch (error) {
-      console.error('❌ Failed to show greeting:', error);
+      console.error('Failed to show greeting:', error);
     }
   }
 
@@ -292,7 +292,7 @@ class ChatbotApp {
       }
       
     } catch (error) {
-      console.error('❌ Failed to speak message:', error);
+      console.error('Failed to speak message:', error);
       // Continue silently - speech is optional
     }
   }
@@ -302,6 +302,31 @@ class ChatbotApp {
     const messageDiv = document.createElement('div');
     messageDiv.className = `message ${sender}-message`;
 
+    // Add thinking indicator for AI messages
+    if (sender === 'ai') {
+      const thinkingDiv = document.createElement('div');
+      thinkingDiv.className = 'thinking-indicator';
+      thinkingDiv.innerHTML = '<span>•</span><span>•</span><span>•</span>';
+      messageDiv.appendChild(thinkingDiv);
+      
+      this.elements.chatMessages.appendChild(messageDiv);
+      this.scrollToBottom();
+      
+      // Remove thinking indicator after delay and add actual content
+      setTimeout(() => {
+        thinkingDiv.remove();
+        this.addMessageContent(messageDiv, content);
+      }, 1200);
+      return;
+    }
+    
+    this.addMessageContent(messageDiv, content);
+    this.elements.chatMessages.appendChild(messageDiv);
+    this.scrollToBottom();
+  }
+
+  // Add message content (separated for thinking indicator)
+  addMessageContent(messageDiv, content) {
     const contentDiv = document.createElement('div');
     contentDiv.className = 'message-content';
     
@@ -315,9 +340,6 @@ class ChatbotApp {
 
     messageDiv.appendChild(contentDiv);
     messageDiv.appendChild(timeDiv);
-
-    this.elements.chatMessages.appendChild(messageDiv);
-    this.scrollToBottom();
   }
 
   // Format time for messages

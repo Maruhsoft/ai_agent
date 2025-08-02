@@ -11,14 +11,14 @@ class AvatarManager {
   async initialize() {
     try {
       if (!this.config.isFeatureEnabled('avatar_animations')) {
-        console.log('🎭 Avatar animations disabled in configuration');
+        console.log('Avatar animations disabled in configuration');
         return;
       }
 
       const avatarConfig = this.config.getApiConfig('avatar');
       this.currentProvider = avatarConfig.provider;
       
-      console.log(`🎭 Initializing avatar with ${this.currentProvider}`);
+      console.log(`Initializing avatar with ${this.currentProvider}`);
       
       switch (this.currentProvider) {
         case 'readyplayerme':
@@ -32,10 +32,10 @@ class AvatarManager {
       }
       
       this.isInitialized = true;
-      console.log('✅ Avatar system initialized successfully');
+      console.log('Avatar system initialized successfully');
       
     } catch (error) {
-      console.error('❌ Failed to initialize avatar system:', error);
+      console.error('Failed to initialize avatar system:', error);
       // Don't throw - avatar is optional, continue without it
     }
   }
@@ -87,7 +87,7 @@ class AvatarManager {
         this.avatarElement = avatarContainer;
       }
 
-      console.log('✅ Ready Player Me avatar loaded');
+      console.log('Ready Player Me avatar loaded');
       
     } catch (error) {
       throw new Error(`Ready Player Me initialization failed: ${error.message}`);
@@ -143,7 +143,7 @@ class AvatarManager {
         this.avatarElement = videoContainer;
       }
 
-      console.log('✅ D-ID avatar system ready');
+      console.log('D-ID avatar system ready');
       
     } catch (error) {
       throw new Error(`D-ID initialization failed: ${error.message}`);
@@ -153,11 +153,11 @@ class AvatarManager {
   // Animate avatar with gesture
   async animateGesture(gesture, duration = 3000) {
     if (!this.isInitialized || !this.avatarElement) {
-      console.log('🎭 Avatar not available, skipping gesture animation');
+      console.log('Avatar not available, skipping gesture animation');
       return;
     }
 
-    console.log(`🎭 Animating gesture: ${gesture}`);
+    console.log(`Animating gesture: ${gesture}`);
 
     try {
       switch (this.currentProvider) {

@@ -12,7 +12,7 @@ class VoiceCloningManager {
       const voiceConfig = this.config.getApiConfig('voice_output');
       this.currentProvider = voiceConfig.provider;
       
-      console.log(`🎤 Initializing voice cloning with ${this.currentProvider}`);
+      console.log(`Initializing voice cloning with ${this.currentProvider}`);
       
       switch (this.currentProvider) {
         case 'elevenlabs':
@@ -29,10 +29,10 @@ class VoiceCloningManager {
       }
       
       this.isInitialized = true;
-      console.log('✅ Voice cloning initialized successfully');
+      console.log('Voice cloning initialized successfully');
       
     } catch (error) {
-      console.error('❌ Failed to initialize voice cloning:', error);
+      console.error('Failed to initialize voice cloning:', error);
       throw error;
     }
   }
@@ -62,7 +62,7 @@ class VoiceCloningManager {
         throw new Error('Configured voice ID not found in your ElevenLabs account');
       }
 
-      console.log(`✅ ElevenLabs voice "${targetVoice.name}" ready`);
+      console.log(`ElevenLabs voice "${targetVoice.name}" ready`);
       
     } catch (error) {
       throw new Error(`ElevenLabs initialization failed: ${error.message}`);
@@ -88,7 +88,7 @@ class VoiceCloningManager {
         throw new Error(`Play.ht API error: ${response.status}`);
       }
 
-      console.log('✅ Play.ht voice cloning ready');
+      console.log('Play.ht voice cloning ready');
       
     } catch (error) {
       throw new Error(`Play.ht initialization failed: ${error.message}`);
@@ -113,7 +113,7 @@ class VoiceCloningManager {
         throw new Error(`Resemble.ai API error: ${response.status}`);
       }
 
-      console.log('✅ Resemble.ai voice cloning ready');
+      console.log('Resemble.ai voice cloning ready');
       
     } catch (error) {
       throw new Error(`Resemble.ai initialization failed: ${error.message}`);
@@ -126,7 +126,7 @@ class VoiceCloningManager {
       throw new Error('Voice cloning not initialized');
     }
 
-    console.log(`🎤 Generating speech with ${this.currentProvider}: "${text.substring(0, 50)}..."`);
+    console.log(`Generating speech with ${this.currentProvider}: "${text.substring(0, 50)}..."`);
 
     switch (this.currentProvider) {
       case 'elevenlabs':

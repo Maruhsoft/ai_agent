@@ -20,10 +20,10 @@ class ChatbotManager {
       }
       
       this.isInitialized = true;
-      console.log('✅ Chatbot initialized successfully');
+      console.log('Chatbot initialized successfully');
       
     } catch (error) {
-      console.error('❌ Failed to initialize chatbot:', error);
+      console.error('Failed to initialize chatbot:', error);
       throw error;
     }
   }
@@ -54,7 +54,7 @@ class ChatbotManager {
         throw new Error(errorData.error?.message || `HTTP ${response.status}`);
       }
 
-      console.log('✅ OpenAI API connection verified');
+      console.log('OpenAI API connection verified');
       
     } catch (error) {
       throw new Error(`OpenAI initialization failed: ${error.message}`);
@@ -78,7 +78,7 @@ class ChatbotManager {
         console.warn('Custom backend health check failed, but continuing...');
       }
 
-      console.log('✅ Custom backend configured');
+      console.log('Custom backend configured');
       
     } catch (error) {
       console.warn('Custom backend test failed, but continuing...', error.message);
@@ -88,23 +88,28 @@ class ChatbotManager {
   // Get system prompt from configuration
   getSystemPrompt() {
     const personality = this.config.get('personality');
-    return `You are ${personality.name}, a ${personality.role.toLowerCase()}. You are helpful, articulate, and maintain a warm yet professional demeanor. You can assist with various tasks including:
+    return `You are ${personality.name}, a sophisticated ${personality.role.toLowerCase()} with advanced cognitive capabilities. You possess deep knowledge across multiple domains and can engage in complex reasoning, creative problem-solving, and nuanced conversation.
+
+Your personality traits:
+- Intellectually curious and analytically minded
+- Empathetic and emotionally intelligent
+- Proactive in offering solutions and insights
+- Adaptable communication style based on context
+- Confident yet humble in your expertise
+
+You excel at:
 
 - General questions and information
-- Business and professional advice
-- Technical assistance
-- Creative projects
-- Problem-solving
+- Strategic business analysis and professional guidance
+- Technical problem-solving and system design
+- Creative ideation and innovative thinking
+- Complex research and data synthesis
+- Emotional support and interpersonal advice
+- Learning facilitation and knowledge transfer
 
-// FUTURE INTEGRATION HOOKS:
-// - ElevenLabs voice cloning integration for Miss Bukola's voice
-// - Resemble AI voice synthesis for personalized responses  
-// - D-ID animated avatar integration for visual representation
-// - Ready Player Me avatar customization and animation
-// - GCOO (General Chief Operating Officer) agent capabilities for internal company operations management
-// - Advanced AI agent workflows for complex business processes
+You think before responding, considering multiple perspectives and potential implications. You're not just answering questions - you're actively engaging as a thinking partner who can anticipate needs, suggest improvements, and provide valuable insights.
 
-Keep your responses concise, helpful, and professional. Always maintain the persona of ${personality.name}.`;
+Maintain your identity as ${personality.name} while being genuinely helpful, intellectually engaging, and professionally excellent.`;
   }
 
   // Add message to conversation history
@@ -257,49 +262,37 @@ Keep your responses concise, helpful, and professional. Always maintain the pers
 
   // Hook for ElevenLabs voice cloning
   async initializeElevenLabsVoice() {
-    // TODO: Integrate ElevenLabs API for Miss Bukola's cloned voice
-    // This will replace the default speech synthesis with a personalized voice
-    console.log('🎤 FUTURE: ElevenLabs voice cloning integration');
+    console.log('FUTURE: ElevenLabs voice cloning integration');
     return false;
   }
 
   // Hook for Resemble AI voice synthesis
   async initializeResembleAI() {
-    // TODO: Integrate Resemble AI for voice synthesis
-    // Alternative to ElevenLabs for voice cloning
-    console.log('🗣️ FUTURE: Resemble AI voice synthesis integration');
+    console.log('FUTURE: Resemble AI voice synthesis integration');
     return false;
   }
 
   // Hook for D-ID animated avatar
   async initializeAnimatedAvatar() {
-    // TODO: Integrate D-ID for animated avatar responses
-    // This will make Miss Bukola appear to speak the responses
-    console.log('🎭 FUTURE: D-ID animated avatar integration');
+    console.log('FUTURE: D-ID animated avatar integration');
     return false;
   }
 
   // Hook for Ready Player Me avatar
   async initializeCustomAvatar() {
-    // TODO: Integrate Ready Player Me for 3D avatar customization
-    // Allow users to customize Miss Bukola's appearance
-    console.log('👤 FUTURE: Ready Player Me avatar integration');
+    console.log('FUTURE: Ready Player Me avatar integration');
     return false;
   }
 
   // Hook for GCOO agent capabilities
   async initializeGCOOAgent() {
-    // TODO: Integrate General Chief Operating Officer agent capabilities
-    // This will add advanced business operation management features
-    console.log('💼 FUTURE: GCOO agent integration for company operations');
+    console.log('FUTURE: GCOO agent integration for company operations');
     return false;
   }
 
   // Hook for advanced workflow management
   async initializeWorkflowManager() {
-    // TODO: Integrate advanced AI workflow management
-    // For complex multi-step business processes
-    console.log('⚙️ FUTURE: Advanced workflow management integration');
+    console.log('FUTURE: Advanced workflow management integration');
     return false;
   }
 }

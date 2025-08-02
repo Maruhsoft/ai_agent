@@ -7,11 +7,17 @@
 
 body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
-  background: linear-gradient(135deg, #f5f7fa 0%, #c3cfe2 100%);
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%);
   min-height: 100vh;
   line-height: 1.6;
   color: #333;
   overflow-x: hidden;
+  animation: backgroundShift 20s ease-in-out infinite;
+}
+
+@keyframes backgroundShift {
+  0%, 100% { background: linear-gradient(135deg, #667eea 0%, #764ba2 50%, #f093fb 100%); }
+  50% { background: linear-gradient(135deg, #764ba2 0%, #f093fb 50%, #667eea 100%); }
 }
 
 /* Main Container */
@@ -28,10 +34,12 @@ body {
 
 /* Header Styles */
 .chatbot-header {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.95) 0%, rgba(118, 75, 162, 0.95) 100%);
+  backdrop-filter: blur(10px);
   padding: 2rem 1.5rem;
   color: white;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 32px rgba(0, 0, 0, 0.2);
+  border-bottom: 1px solid rgba(255, 255, 255, 0.1);
 }
 
 .avatar-container {
@@ -44,25 +52,52 @@ body {
   width: 80px;
   height: 80px;
   border-radius: 50%;
-  background: linear-gradient(135deg, #ffffff 0%, #f0f0f0 100%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(240, 240, 240, 0.95) 100%);
+  backdrop-filter: blur(10px);
   display: flex;
   align-items: center;
   justify-content: center;
-  box-shadow: 0 8px 25px rgba(0, 0, 0, 0.2);
-  border: 4px solid rgba(255, 255, 255, 0.3);
+  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+  border: 3px solid rgba(255, 255, 255, 0.4);
   transition: all 0.3s ease;
+  position: relative;
+  overflow: hidden;
 }
 
 .avatar-circle:hover {
   transform: scale(1.05);
-  box-shadow: 0 12px 35px rgba(0, 0, 0, 0.3);
+  box-shadow: 0 16px 45px rgba(0, 0, 0, 0.4);
 }
 
-.avatar-initials {
-  font-size: 1.8rem;
-  font-weight: bold;
-  color: #667eea;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+.avatar-circle::before {
+  content: '';
+  position: absolute;
+  top: -2px;
+  left: -2px;
+  right: -2px;
+  bottom: -2px;
+  background: linear-gradient(45deg, #667eea, #764ba2, #f093fb, #667eea);
+  border-radius: 50%;
+  z-index: -1;
+  animation: borderRotate 3s linear infinite;
+}
+
+@keyframes borderRotate {
+  0% { transform: rotate(0deg); }
+  100% { transform: rotate(360deg); }
+}
+
+.default-avatar {
+  animation: subtlePulse 4s ease-in-out infinite;
+}
+
+@keyframes subtlePulse {
+  0%, 100% { transform: scale(1); }
+  50% { transform: scale(1.02); }
+}
+
+.default-avatar svg {
+  filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
 }
 
 .avatar-info {
@@ -73,13 +108,18 @@ body {
   font-size: 1.8rem;
   font-weight: 600;
   margin-bottom: 0.25rem;
-  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+  background: linear-gradient(45deg, #ffffff, #f0f0f0);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
 }
 
 .avatar-status {
   font-size: 1rem;
   opacity: 0.9;
   font-weight: 300;
+  text-shadow: 1px 1px 2px rgba(0, 0, 0, 0.1);
 }
 
 /* Chat Container */
@@ -87,7 +127,8 @@ body {
   flex: 1;
   overflow-y: auto;
   padding: 1.5rem;
-  background: #fafbfc;
+  background: linear-gradient(180deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 251, 252, 0.95) 100%);
+  backdrop-filter: blur(10px);
 }
 
 .chat-messages {
@@ -141,10 +182,24 @@ body {
 }
 
 .ai-message .message-content {
-  background: linear-gradient(135deg, #ffffff 0%, #f8f9fa 100%);
+  background: linear-gradient(135deg, rgba(255, 255, 255, 0.95) 0%, rgba(248, 249, 250, 0.95) 100%);
+  backdrop-filter: blur(10px);
   color: #333;
-  border: 1px solid #e9ecef;
+  border: 1px solid rgba(233, 236, 239, 0.5);
   margin-right: 2rem;
+  position: relative;
+}
+
+.ai-message .message-content::before {
+  content: '';
+  position: absolute;
+  top: -1px;
+  left: -1px;
+  right: -1px;
+  bottom: -1px;
+  background: linear-gradient(45deg, rgba(102, 126, 234, 0.1), rgba(118, 75, 162, 0.1));
+  border-radius: 19px;
+  z-index: -1;
 }
 
 .message-content p {
@@ -171,15 +226,18 @@ body {
   display: flex;
   gap: 0.75rem;
   align-items: center;
-  background: #f8f9fa;
+  background: rgba(248, 249, 250, 0.95);
+  backdrop-filter: blur(10px);
   border-radius: 25px;
   padding: 0.5rem;
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.05), 0 4px 15px rgba(0, 0, 0, 0.1);
   transition: all 0.3s ease;
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .input-wrapper:focus-within {
-  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1), 0 0 0 3px rgba(102, 126, 234, 0.1);
+  box-shadow: inset 0 2px 5px rgba(0, 0, 0, 0.1), 0 0 0 3px rgba(102, 126, 234, 0.2), 0 8px 25px rgba(0, 0, 0, 0.15);
+  transform: translateY(-2px);
 }
 
 #messageInput {
@@ -210,18 +268,20 @@ body {
 }
 
 .mic-button {
-  background: linear-gradient(135deg, #28a745 0%, #20c997 100%);
+  background: linear-gradient(135deg, rgba(40, 167, 69, 0.9) 0%, rgba(32, 201, 151, 0.9) 100%);
+  backdrop-filter: blur(10px);
   color: white;
-  box-shadow: 0 4px 15px rgba(40, 167, 69, 0.3);
+  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .mic-button:hover {
   transform: scale(1.1);
-  box-shadow: 0 6px 20px rgba(40, 167, 69, 0.4);
+  box-shadow: 0 8px 25px rgba(40, 167, 69, 0.5);
 }
 
 .mic-button.recording {
-  background: linear-gradient(135deg, #dc3545 0%, #fd7e14 100%);
+  background: linear-gradient(135deg, rgba(220, 53, 69, 0.9) 0%, rgba(253, 126, 20, 0.9) 100%);
   animation: pulse 1.5s infinite;
 }
 
@@ -232,14 +292,16 @@ body {
 }
 
 .send-button {
-  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  background: linear-gradient(135deg, rgba(102, 126, 234, 0.9) 0%, rgba(118, 75, 162, 0.9) 100%);
+  backdrop-filter: blur(10px);
   color: white;
-  box-shadow: 0 4px 15px rgba(102, 126, 234, 0.3);
+  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  border: 1px solid rgba(255, 255, 255, 0.2);
 }
 
 .send-button:hover {
   transform: scale(1.1);
-  box-shadow: 0 6px 20px rgba(102, 126, 234, 0.4);
+  box-shadow: 0 8px 25px rgba(102, 126, 234, 0.5);
 }
 
 .send-button:disabled {
@@ -263,10 +325,12 @@ body {
   position: absolute;
   bottom: 100px;
   left: 1.5rem;
-  background: white;
+  background: rgba(255, 255, 255, 0.95);
+  backdrop-filter: blur(10px);
   padding: 1rem 1.5rem;
   border-radius: 15px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.1);
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.15);
+  border: 1px solid rgba(255, 255, 255, 0.2);
   display: none;
   align-items: center;
   gap: 1rem;
@@ -297,7 +361,7 @@ body {
   width: 8px;
   height: 8px;
   border-radius: 50%;
-  background: #667eea;
+  background: linear-gradient(45deg, #667eea, #764ba2);
   animation: loadingBounce 1.4s infinite ease-in-out both;
 }
 
@@ -315,15 +379,19 @@ body {
 
 .loading-indicator p {
   margin: 0;
-  color: #667eea;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  -webkit-background-clip: text;
+  -webkit-text-fill-color: transparent;
+  background-clip: text;
   font-weight: 500;
 }
 
 /* Footer */
 .chatbot-footer {
-  background: #f8f9fa;
+  background: rgba(248, 249, 250, 0.95);
+  backdrop-filter: blur(10px);
   padding: 1rem;
-  border-top: 1px solid #e9ecef;
+  border-top: 1px solid rgba(233, 236, 239, 0.5);
   text-align: center;
 }
 
@@ -345,6 +413,36 @@ body {
   letter-spacing: 1px;
   word-break: break-all;
   line-height: 1.4;
+}
+
+/* Thinking Indicator */
+.thinking-indicator {
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+  padding: 1rem 1.25rem;
+  background: rgba(248, 249, 250, 0.95);
+  backdrop-filter: blur(10px);
+  border-radius: 18px;
+  margin-right: 2rem;
+  border: 1px solid rgba(233, 236, 239, 0.5);
+}
+
+.thinking-indicator span {
+  width: 8px;
+  height: 8px;
+  border-radius: 50%;
+  background: linear-gradient(45deg, #667eea, #764ba2);
+  animation: thinkingPulse 1.5s infinite ease-in-out;
+}
+
+.thinking-indicator span:nth-child(1) { animation-delay: 0s; }
+.thinking-indicator span:nth-child(2) { animation-delay: 0.3s; }
+.thinking-indicator span:nth-child(3) { animation-delay: 0.6s; }
+
+@keyframes thinkingPulse {
+  0%, 60%, 100% { transform: scale(1); opacity: 0.7; }
+  30% { transform: scale(1.2); opacity: 1; }
 }
 
 /* Responsive Design */

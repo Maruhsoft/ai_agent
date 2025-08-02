@@ -66,16 +66,22 @@ class SpeechManager {
       
       // Find British female voice
       this.selectedVoice = voices.find(voice => 
-        voice.lang.includes('en-GB') && voice.name.toLowerCase().includes('female')
+        (voice.lang.includes('en-GB') || voice.lang.includes('en-AU')) && 
+        (voice.name.toLowerCase().includes('female') || voice.name.toLowerCase().includes('woman') || voice.name.toLowerCase().includes('zira') || voice.name.toLowerCase().includes('hazel'))
       ) || voices.find(voice => 
-        voice.lang.includes('en-GB')
+        voice.lang.includes('en-GB') || voice.lang.includes('en-AU')
       ) || voices.find(voice => 
-        voice.lang.includes('en-US') && voice.name.toLowerCase().includes('female')
+        voice.lang.includes('en-US') && 
+        (voice.name.toLowerCase().includes('female') || voice.name.toLowerCase().includes('woman') || voice.name.toLowerCase().includes('zira') || voice.name.toLowerCase().includes('samantha'))
       ) || voices.find(voice => 
         voice.lang.includes('en')
       ) || voices[0];
 
       this.voiceInitialized = true;
+      
+      if (this.selectedVoice) {
+        console.log(`Selected voice: ${this.selectedVoice.name} (${this.selectedVoice.lang})`);
+      }
     };
 
     // Load voices when available

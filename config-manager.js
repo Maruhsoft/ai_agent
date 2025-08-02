@@ -15,10 +15,10 @@ class ConfigManager {
       
       this.config = await response.json();
       this.configLoaded = true;
-      console.log('✅ Configuration loaded successfully');
+      console.log('Configuration loaded successfully');
       return this.config;
     } catch (error) {
-      console.error('❌ Failed to load configuration:', error);
+      console.error('Failed to load configuration:', error);
       throw new Error('Configuration file could not be loaded. Please check config.json exists and is valid.');
     }
   }
@@ -183,9 +183,9 @@ class ConfigManager {
   saveToStorage() {
     try {
       localStorage.setItem('bukola_config', JSON.stringify(this.config));
-      console.log('✅ Configuration saved to localStorage');
+      console.log('Configuration saved to localStorage');
     } catch (error) {
-      console.error('❌ Failed to save configuration:', error);
+      console.error('Failed to save configuration:', error);
     }
   }
 
@@ -197,11 +197,11 @@ class ConfigManager {
         const storedConfig = JSON.parse(stored);
         // Merge with default config, prioritizing stored values
         this.config = { ...this.config, ...storedConfig };
-        console.log('✅ Configuration loaded from localStorage');
+        console.log('Configuration loaded from localStorage');
         return true;
       }
     } catch (error) {
-      console.error('❌ Failed to load configuration from localStorage:', error);
+      console.error('Failed to load configuration from localStorage:', error);
     }
     return false;
   }
