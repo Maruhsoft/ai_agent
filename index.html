@@ -6,6 +6,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Miss Bukola Lukan - AI Assistant</title>
     <link rel="stylesheet" href="styles.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/three.js/r150/three.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/three@0.150.0/examples/js/loaders/GLTFLoader.js"></script>
   </head>
   <body>
     <div class="chatbot-container">
@@ -13,6 +15,7 @@
       <div class="chatbot-header">
         <div class="avatar-container">
           <div class="avatar-circle">
+            <canvas id="avatar-canvas" class="avatar-3d"></canvas>
             <div class="default-avatar">
               <svg width="60" height="60" viewBox="0 0 100 100" fill="none" xmlns="http://www.w3.org/2000/svg">
                 <!-- Face -->
@@ -41,6 +44,10 @@
           <div class="avatar-info">
             <h2 class="avatar-name">Miss Bukola Lukan</h2>
             <p class="avatar-status">Professional AI Assistant</p>
+            <div class="status-indicator">
+              <span class="status-dot"></span>
+              <span class="status-text">Online</span>
+            </div>
           </div>
         </div>
       </div>
@@ -92,6 +99,16 @@
         </div>
         <p>Analyzing and formulating response...</p>
       </div>
+
+      <!-- Floating Action Button -->
+      <div class="floating-actions">
+        <button class="fab" id="settingsButton" title="Settings">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+            <circle cx="12" cy="12" r="3"/>
+            <path d="M12 1v6m0 6v6m11-7h-6m-6 0H1"/>
+          </svg>
+        </button>
+      </div>
     </div>
 
     <!-- Footer with Encrypted Contact -->
@@ -113,5 +130,6 @@
     <script src="speech.js"></script>
     <script src="chatbot.js"></script>
     <script src="main.js"></script>
+    <script src="avatar-3d.js"></script>
   </body>
 </html>

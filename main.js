@@ -111,7 +111,9 @@ class ChatbotApp {
       this.addMessage(greetingMessage, 'ai');
       
       // Animate avatar gesture
-      if (this.avatarManager && this.avatarManager.isAvailable()) {
+      if (window.avatar3D && window.avatar3D.isLoaded) {
+        window.avatar3D.playGesture('greeting', 4000);
+      } else if (this.avatarManager && this.avatarManager.isAvailable()) {
         this.avatarManager.animateGesture(greetingGesture);
       }
       
@@ -189,11 +191,21 @@ class ChatbotApp {
     this.speechManager.onSpeechStart = () => {
       this.elements.micButton.classList.add('recording');
       this.elements.voiceStatus.textContent = 'Listening... Speak now';
+      
+      // Animate avatar for listening
+      if (window.avatar3D && window.avatar3D.isLoaded) {
+        window.avatar3D.startListening();
+      }
     };
 
     this.speechManager.onSpeechEnd = () => {
       this.elements.micButton.classList.remove('recording');
       this.elements.voiceStatus.textContent = '';
+      
+      // Stop avatar listening animation
+      if (window.avatar3D && window.avatar3D.isLoaded) {
+        window.avatar3D.stopListening();
+      }
     };
 
     this.speechManager.onSpeechResult = (transcript) => {
@@ -208,6 +220,12 @@ class ChatbotApp {
     this.speechManager.onSpeechError = (error) => {
       this.elements.micButton.classList.remove('recording');
       this.elements.voiceStatus.textContent = `Voice error: ${error}`;
+      
+      // Stop avatar listening animation
+      if (window.avatar3D && window.avatar3D.isLoaded) {
+        window.avatar3D.stopListening();
+      }
+      
       setTimeout(() => {
         this.elements.voiceStatus.textContent = '';
       }, 3000);
@@ -275,6 +293,11 @@ class ChatbotApp {
       // Add AI response to chat
       this.addMessage(response, 'ai');
       
+      // Animate avatar for response
+      if (window.avatar3D && window.avatar3D.isLoaded) {
+        window.avatar3D.playGesture('nod', 2000);
+      }
+      
       // Speak the response with cloned voice or fallback
       if (this.configManager.get('personality.behavior.auto_speak_responses')) {
         await this.speakMessage(response);
@@ -286,16 +309,31 @@ class ChatbotApp {
       
       // Show error message
       this.addMessage(`Sorry, I encountered an error: ${error.message}`, 'ai');
+      
+      // Animate avatar for error
+      if (window.avatar3D && window.avatar3D.isLoaded) {
+        window.avatar3D.playGesture('shake', 2000);
+      }
     }
   }
 
   // Speak message using cloned voice or fallback to browser TTS
   async speakMessage(message) {
     try {
+      // Start avatar speaking animation
+      if (window.avatar3D && window.avatar3D.isLoaded) {
+        window.avatar3D.startSpeaking();
+      }
+      
       // Try cloned voice first
       if (this.voiceCloning && this.voiceCloning.isAvailable()) {
         const audioUrl = await this.voiceCloning.generateSpeech(message);
         await this.voiceCloning.playAudio(audioUrl);
+        
+        // Stop avatar speaking animation
+        if (window.avatar3D && window.avatar3D.isLoaded) {
+          window.avatar3D.stopSpeaking();
+        }
         return;
       }
       
@@ -306,10 +344,20 @@ class ChatbotApp {
           rate: voiceConfig.pace === 'fast' ? 1.2 : voiceConfig.pace === 'slow' ? 0.8 : 0.9,
           pitch: voiceConfig.pitch === 'high' ? 1.2 : voiceConfig.pitch === 'low' ? 0.8 : 1.0
         });
+        
+        // Stop avatar speaking animation
+        if (window.avatar3D && window.avatar3D.isLoaded) {
+          window.avatar3D.stopSpeaking();
+        }
       }
       
     } catch (error) {
       console.error('Failed to speak message:', error);
+      
+      // Stop avatar speaking animation on error
+      if (window.avatar3D && window.avatar3D.isLoaded) {
+        window.avatar3D.stopSpeaking();
+      }
       // Continue silently - speech is optional
     }
   }
