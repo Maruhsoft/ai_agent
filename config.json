@@ -1,0 +1,226 @@
+{
+  "_comments": {
+    "description": "Configuration file for Miss Bukola Lukan AI Assistant",
+    "instructions": "Fill in the API keys and configuration values below to enable full functionality"
+  },
+  
+  "agent": {
+    "_comment": "AI Agent Configuration - The brain of Miss Bukola",
+    "provider": "openai",
+    "openai": {
+      "_instructions": [
+        "1. Go to https://platform.openai.com/api-keys",
+        "2. Sign in or create an OpenAI account",
+        "3. Click 'Create new secret key'",
+        "4. Copy the key (starts with 'sk-')",
+        "5. Paste it in the 'api_key' field below",
+        "6. Choose your preferred model (gpt-4 for best quality, gpt-3.5-turbo for faster/cheaper)"
+      ],
+      "api_key": "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",
+      "model": "gpt-4",
+      "max_tokens": 500,
+      "temperature": 0.7,
+      "base_url": "https://api.openai.com/v1/chat/completions"
+    },
+    "custom_backend": {
+      "_instructions": [
+        "Alternative to OpenAI - use your own LLM backend",
+        "1. Deploy your LLM backend (e.g., using Ollama, vLLM, or custom API)",
+        "2. Set the endpoint URL in 'api_url'",
+        "3. Configure authentication if required",
+        "4. Set provider to 'custom' to use this instead of OpenAI"
+      ],
+      "api_url": "",
+      "api_key": "",
+      "model": "llama-2-7b-chat"
+    }
+  },
+
+  "voice_output": {
+    "_comment": "Cloned Voice Configuration - Miss Bukola's voice synthesis",
+    "provider": "elevenlabs",
+    "elevenlabs": {
+      "_instructions": [
+        "ElevenLabs Voice Cloning Setup:",
+        "1. Go to https://elevenlabs.io/",
+        "2. Sign up and verify your account",
+        "3. Go to 'Voice Lab' to clone Miss Bukola's voice:",
+        "   - Upload 1-5 minutes of clear audio samples",
+        "   - Name the voice 'Miss Bukola Lukan'",
+        "   - Wait for processing (5-10 minutes)",
+        "4. Go to Profile Settings → API Keys",
+        "5. Copy your API key and paste below",
+        "6. Copy the Voice ID from Voice Lab and paste below"
+      ],
+      "api_key": "",
+      "voice_id": "",
+      "model": "eleven_multilingual_v2",
+      "stability": 0.75,
+      "similarity_boost": 0.75,
+      "style": 0.5,
+      "api_url": "https://api.elevenlabs.io/v1"
+    },
+    "playht": {
+      "_instructions": [
+        "Play.ht Voice Cloning Setup:",
+        "1. Go to https://play.ht/",
+        "2. Sign up and verify your account",
+        "3. Go to 'Voice Cloning' section:",
+        "   - Upload high-quality audio samples (2-30 minutes)",
+        "   - Name the voice 'Miss Bukola Lukan'",
+        "   - Wait for training completion",
+        "4. Go to API section in dashboard",
+        "5. Copy User ID and API Key",
+        "6. Copy the cloned voice ID after training"
+      ],
+      "user_id": "",
+      "api_key": "",
+      "voice_id": "",
+      "voice_engine": "PlayHT2.0-turbo",
+      "api_url": "https://api.play.ht/api/v2"
+    },
+    "resemble": {
+      "_instructions": [
+        "Resemble.ai Voice Cloning Setup:",
+        "1. Go to https://www.resemble.ai/",
+        "2. Sign up and create a project",
+        "3. Go to 'Voices' → 'Create Voice':",
+        "   - Upload 3-10 minutes of clean audio",
+        "   - Name it 'Miss Bukola Lukan'",
+        "   - Wait for training (15-30 minutes)",
+        "4. Go to 'API' section in dashboard",
+        "5. Copy your API token",
+        "6. Copy the voice UUID from voices list"
+      ],
+      "api_token": "",
+      "voice_uuid": "",
+      "project_uuid": "",
+      "api_url": "https://app.resemble.ai/api/v2"
+    }
+  },
+
+  "voice_input": {
+    "_comment": "Voice Input Configuration - Web Speech API settings",
+    "enabled": true,
+    "language": "en-US",
+    "continuous": false,
+    "interim_results": false,
+    "max_alternatives": 1,
+    "fallback_message": "Voice input not supported in this browser"
+  },
+
+  "avatar": {
+    "_comment": "Avatar Configuration - Visual representation of Miss Bukola",
+    "provider": "readyplayerme",
+    "readyplayerme": {
+      "_instructions": [
+        "Ready Player Me Avatar Setup:",
+        "1. Go to https://readyplayer.me/",
+        "2. Create an account and design Miss Bukola's avatar:",
+        "   - Choose professional appearance",
+        "   - Select appropriate clothing and features",
+        "   - Customize to match Miss Bukola's persona",
+        "3. Save and get the avatar URL (.glb file)",
+        "4. For animations, use Ready Player Me's animation system",
+        "5. Optional: Get developer account for API access"
+      ],
+      "avatar_url": "",
+      "animation_url": "",
+      "api_key": "",
+      "partner_subdomain": ""
+    },
+    "did": {
+      "_instructions": [
+        "D-ID Animated Avatar Setup:",
+        "1. Go to https://www.d-id.com/",
+        "2. Sign up and verify your account",
+        "3. Go to 'Studio' → 'Create Video':",
+        "   - Upload Miss Bukola's photo (high quality, front-facing)",
+        "   - Or choose from their presenter library",
+        "4. Go to 'API' section in dashboard",
+        "5. Copy your API key",
+        "6. Note: Each animation request costs credits"
+      ],
+      "api_key": "",
+      "presenter_id": "",
+      "api_url": "https://api.d-id.com"
+    }
+  },
+
+  "personality": {
+    "_comment": "Miss Bukola Lukan's personality and behavior settings",
+    "name": "Miss Bukola Lukan",
+    "role": "Professional AI Assistant",
+    "greeting_message": "Hello! I'm Miss Bukola Lukan, your professional AI assistant. How may I help you today?",
+    "greeting_gesture": "wave",
+    "voice_characteristics": {
+      "accent": "British",
+      "tone": "Professional and warm",
+      "pace": "Moderate",
+      "pitch": "Medium"
+    },
+    "behavior": {
+      "auto_greet_on_first_visit": true,
+      "auto_speak_responses": true,
+      "show_typing_indicator": true,
+      "response_delay_ms": 1000
+    }
+  },
+
+  "ui": {
+    "_comment": "User interface customization settings",
+    "theme": "light",
+    "primary_color": "#667eea",
+    "secondary_color": "#764ba2",
+    "avatar_size": "80px",
+    "chat_max_width": "800px",
+    "enable_animations": true,
+    "mobile_responsive": true
+  },
+
+  "security": {
+    "_comment": "Security and encryption settings",
+    "encrypt_contact": true,
+    "contact_number": "+234 813 788 1985",
+    "encryption_layers": 5,
+    "api_key_storage": "localStorage"
+  },
+
+  "features": {
+    "_comment": "Feature flags for enabling/disabling functionality",
+    "voice_input": true,
+    "voice_output": true,
+    "avatar_animations": true,
+    "chat_history": true,
+    "auto_scroll": true,
+    "mobile_optimized": true
+  },
+
+  "future_integrations": {
+    "_comment": "Placeholder for future feature integrations",
+    "gcoo_agent": {
+      "_instructions": [
+        "General Chief Operating Officer Agent Integration:",
+        "1. This will add business operation management capabilities",
+        "2. Integration with company systems and workflows",
+        "3. Advanced decision-making and process automation",
+        "4. Custom business logic and rule engines"
+      ],
+      "enabled": false,
+      "api_endpoint": "",
+      "capabilities": ["workflow_management", "decision_support", "process_automation"]
+    },
+    "advanced_workflows": {
+      "_instructions": [
+        "Advanced AI Workflow Management:",
+        "1. Multi-step business process automation",
+        "2. Integration with external business tools",
+        "3. Custom workflow builders and triggers",
+        "4. Advanced analytics and reporting"
+      ],
+      "enabled": false,
+      "workflow_engine": "",
+      "integration_apis": []
+    }
+  }
+}

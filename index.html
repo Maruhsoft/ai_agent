@@ -1,0 +1,86 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <link rel="icon" type="image/svg+xml" href="/vite.svg" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Miss Bukola Lukan - AI Assistant</title>
+    <link rel="stylesheet" href="styles.css">
+  </head>
+  <body>
+    <div class="chatbot-container">
+      <!-- Header with Avatar -->
+      <div class="chatbot-header">
+        <div class="avatar-container">
+          <div class="avatar-circle">
+            <span class="avatar-initials">BL</span>
+          </div>
+          <div class="avatar-info">
+            <h2 class="avatar-name">Miss Bukola Lukan</h2>
+            <p class="avatar-status">AI Assistant</p>
+          </div>
+        </div>
+      </div>
+
+      <!-- Chat Messages Area -->
+      <div class="chat-container" id="chatContainer">
+        <div class="chat-messages" id="chatMessages">
+          <div class="message ai-message">
+            <div class="message-content">
+              <p>Hello! I'm Miss Bukola Lukan, your AI assistant. How can I help you today?</p>
+            </div>
+            <div class="message-time">Just now</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Input Area -->
+      <div class="input-container">
+        <div class="input-wrapper">
+          <input 
+            type="text" 
+            id="messageInput" 
+            placeholder="Type your message here..."
+            autocomplete="off"
+          />
+          <button class="mic-button" id="micButton" title="Voice Input">
+            🎙️
+          </button>
+          <button class="send-button" id="sendButton" title="Send Message">
+            <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+              <path d="m22 2-7 20-4-9-9-4 20-7z"/>
+            </svg>
+          </button>
+        </div>
+        <div class="voice-status" id="voiceStatus"></div>
+      </div>
+
+      <!-- Loading Indicator -->
+      <div class="loading-indicator" id="loadingIndicator">
+        <div class="loading-dots">
+          <span></span>
+          <span></span>
+          <span></span>
+        </div>
+        <p>Miss Bukola is thinking...</p>
+      </div>
+    </div>
+
+    <!-- Footer with Encrypted Contact -->
+    <footer class="chatbot-footer">
+      <div class="footer-content">
+        <p class="footer-text">© 2025 Miss Bukola Lukan AI Assistant</p>
+        <div class="encrypted-contact" id="encryptedContact"></div>
+      </div>
+    </footer>
+
+    <!-- Scripts -->
+    <script src="config-manager.js"></script>
+    <script src="voice-cloning.js"></script>
+    <script src="avatar-manager.js"></script>
+    <script src="encryption.js"></script>
+    <script src="speech.js"></script>
+    <script src="chatbot.js"></script>
+    <script src="main.js"></script>
+  </body>
+</html>
