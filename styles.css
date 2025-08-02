@@ -89,6 +89,8 @@ body {
 
 .default-avatar {
   animation: subtlePulse 4s ease-in-out infinite;
+  position: relative;
+  z-index: 1;
 }
 
 @keyframes subtlePulse {
@@ -98,6 +100,21 @@ body {
 
 .default-avatar svg {
   filter: drop-shadow(2px 2px 4px rgba(0, 0, 0, 0.1));
+}
+
+.rpm-avatar-container {
+  position: absolute !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  border-radius: 50% !important;
+  overflow: hidden !important;
+  z-index: 2 !important;
+}
+
+.rpm-avatar-container canvas {
+  border-radius: 50% !important;
 }
 
 .avatar-info {
@@ -408,11 +425,15 @@ body {
 
 .encrypted-contact {
   font-family: 'Courier New', monospace;
-  font-size: 0.75rem;
-  color: #999;
-  letter-spacing: 1px;
-  word-break: break-all;
+  font-size: 0.9rem;
+  color: #667eea;
+  font-weight: 500;
   line-height: 1.4;
+  text-align: center;
+  padding: 0.5rem;
+  background: rgba(102, 126, 234, 0.1);
+  border-radius: 8px;
+  border: 1px solid rgba(102, 126, 234, 0.2);
 }
 
 /* Thinking Indicator */

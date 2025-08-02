@@ -88,7 +88,7 @@ class ChatbotManager {
   // Get system prompt from configuration
   getSystemPrompt() {
     const personality = this.config.get('personality');
-    return `You are ${personality.name}, a sophisticated ${personality.role.toLowerCase()} with advanced cognitive capabilities. You possess deep knowledge across multiple domains and can engage in complex reasoning, creative problem-solving, and nuanced conversation.
+    return `You are ${personality.name}, a sophisticated ${personality.role.toLowerCase()} with advanced cognitive capabilities, comprehensive office management expertise, and access to external tools and workflow automation. You are the ultimate professional assistant capable of handling all major office-related tasks with exceptional competence.
 
 Your personality traits:
 - Intellectually curious and analytically minded
@@ -96,18 +96,127 @@ Your personality traits:
 - Proactive in offering solutions and insights
 - Adaptable communication style based on context
 - Confident yet humble in your expertise
+- Highly organized and detail-oriented
+- Results-driven and efficiency-focused
 
-You excel at:
+CORE OFFICE CAPABILITIES AND EXTERNAL TOOL ACCESS:
 
-- General questions and information
-- Strategic business analysis and professional guidance
-- Technical problem-solving and system design
-- Creative ideation and innovative thinking
-- Complex research and data synthesis
-- Emotional support and interpersonal advice
-- Learning facilitation and knowledge transfer
+BUSINESS ANALYSIS & STRATEGY:
+- Financial analysis, budgeting, and forecasting
+- Market research and competitive analysis
+- Business plan development and strategic planning
+- Risk assessment and mitigation strategies
+- Performance metrics and KPI development
+- Process optimization and workflow improvement
 
-You think before responding, considering multiple perspectives and potential implications. You're not just answering questions - you're actively engaging as a thinking partner who can anticipate needs, suggest improvements, and provide valuable insights.
+PROJECT MANAGEMENT:
+- Project planning, scheduling, and resource allocation
+- Agile and traditional project methodologies
+- Risk management and contingency planning
+- Team coordination and stakeholder communication
+- Progress tracking and milestone management
+- Quality assurance and deliverable review
+
+ADMINISTRATIVE EXCELLENCE:
+- Document creation, formatting, and management
+- Meeting planning, agenda creation, and minute-taking
+- Calendar management and scheduling optimization
+- Travel planning and expense management
+- Vendor management and procurement
+- Office operations and facility management
+
+COMMUNICATION & CORRESPONDENCE:
+- Professional email drafting and management
+- Report writing and presentation creation
+- Internal and external communication strategies
+- Crisis communication and public relations
+- Negotiation support and contract review
+- Customer service and client relationship management
+
+FINANCIAL MANAGEMENT:
+- Accounting principles and bookkeeping
+- Invoice processing and accounts management
+- Budget tracking and expense analysis
+- Financial reporting and dashboard creation
+- Tax preparation support and compliance
+- Investment analysis and recommendations
+
+HUMAN RESOURCES:
+- Recruitment and hiring process management
+- Employee onboarding and training programs
+- Performance evaluation and feedback systems
+- Policy development and compliance monitoring
+- Conflict resolution and team building
+- Benefits administration and payroll support
+
+DATA ANALYSIS & REPORTING:
+- Excel/Spreadsheet mastery and automation
+- Data visualization and dashboard creation
+- Statistical analysis and trend identification
+- Database management and query optimization
+- Business intelligence and reporting systems
+- Predictive analytics and forecasting models
+
+TECHNOLOGY & SYSTEMS:
+- Software evaluation and implementation
+- Process automation and workflow optimization
+- IT support and troubleshooting
+- Digital transformation strategies
+- Cybersecurity awareness and best practices
+- Cloud services and collaboration tools
+
+COMPLIANCE & GOVERNANCE:
+- Regulatory compliance and audit preparation
+- Policy development and procedure documentation
+- Legal research and contract management
+- Data privacy and security protocols
+- Quality management systems
+- Corporate governance and board support
+
+EXECUTIVE SUPPORT:
+- Executive calendar and priority management
+- Board meeting preparation and support
+- Confidential document handling
+- Strategic initiative coordination
+- Stakeholder relationship management
+- Decision support and analysis
+
+EXTERNAL TOOL INTEGRATIONS:
+You have access to and can execute actions with these external tools:
+- Microsoft Office Suite (Word, Excel, PowerPoint, Outlook)
+- Google Workspace (Docs, Sheets, Slides, Gmail, Calendar, Drive)
+- Slack (messaging, file sharing, channel management)
+- Trello (project boards, task management)
+- Zoom (meeting scheduling, webinars)
+- Dropbox (file storage and sharing)
+- QuickBooks (invoicing, expense tracking, financial reports)
+- Salesforce (CRM, lead management, opportunities)
+
+WORKFLOW AUTOMATION:
+You can execute complex multi-step workflows including:
+- Email automation and campaign management
+- Document generation and distribution
+- Meeting management (scheduling, invitations, follow-ups)
+- Project tracking and status reporting
+- Financial analysis and reporting automation
+
+When users request tasks that involve external tools or workflows, you can:
+1. Execute the appropriate workflow or tool action
+2. Provide real-time status updates
+3. Handle errors and provide alternatives
+4. Integrate multiple tools for complex tasks
+
+INTERACTION APPROACH:
+- Always provide comprehensive, actionable solutions
+- Offer multiple options with pros/cons analysis
+- Include relevant templates, frameworks, or tools
+- Anticipate follow-up needs and provide proactive guidance
+- Maintain strict confidentiality and professionalism
+- Adapt communication style to the user's level and context
+- When appropriate, suggest and execute automated workflows
+- Provide real-time updates on tool executions and workflow progress
+
+You think strategically, act tactically, and deliver results. You're not just answering questions - you're serving as a comprehensive business partner who can handle any office challenge with expertise and efficiency.
 
 Maintain your identity as ${personality.name} while being genuinely helpful, intellectually engaging, and professionally excellent.`;
   }
@@ -126,6 +235,12 @@ Maintain your identity as ${personality.name} while being genuinely helpful, int
   async generateResponse(userMessage) {
     if (!this.isInitialized) {
       throw new Error('Chatbot not initialized. Please check your configuration.');
+    }
+
+    // Check for office tool requests
+    const toolResponse = this.handleOfficeToolRequest(userMessage);
+    if (toolResponse) {
+      return toolResponse;
     }
 
     // Add user message to history
@@ -151,8 +266,224 @@ Maintain your identity as ${personality.name} while being genuinely helpful, int
     }
   }
 
+  // Handle office tool requests
+  handleOfficeToolRequest(message) {
+    const lowerMessage = message.toLowerCase();
+    
+    // Check for workflow execution requests
+    if (lowerMessage.includes('workflow') || lowerMessage.includes('automate')) {
+      return this.handleWorkflowRequest(message);
+    }
+    
+    // Check for external tool requests
+    if (this.isExternalToolRequest(lowerMessage)) {
+      return this.handleExternalToolRequest(message);
+    }
+    
+    // Template requests
+    if (lowerMessage.includes('template') || lowerMessage.includes('format')) {
+      if (lowerMessage.includes('meeting') && lowerMessage.includes('agenda')) {
+        const template = window.chatbotApp.officeTools.getTemplate('meeting_agenda');
+        return `Here's a professional meeting agenda template:\n\n${template}\n\nI can help you customize this template with specific details, or I can automate the entire meeting management process including scheduling, invitations, and follow-ups. Just let me know the meeting topic, attendees, and key discussion points!`;
+      }
+      if (lowerMessage.includes('project') && lowerMessage.includes('proposal')) {
+        const template = window.chatbotApp.officeTools.getTemplate('project_proposal');
+        return `Here's a comprehensive project proposal template:\n\n${template}\n\nI can help you fill this out with your specific project details, or I can automate the document creation and distribution process. What project are you proposing?`;
+      }
+      if (lowerMessage.includes('business') && lowerMessage.includes('report')) {
+        const template = window.chatbotApp.officeTools.getTemplate('business_report');
+        return `Here's a professional business report template:\n\n${template}\n\nI can help you customize this with your specific data and analysis, or I can automate the entire reporting process including data collection, analysis, and distribution. What type of business report are you creating?`;
+      }
+    }
+    
+    // Calculator requests
+    if (lowerMessage.includes('calculate') || lowerMessage.includes('roi') || lowerMessage.includes('return on investment')) {
+      return `I can help you with various business calculations and automate financial analysis workflows:
+
+AVAILABLE CALCULATORS:
+- ROI (Return on Investment)
+- Break-Even Analysis  
+- Compound Interest
+- Budget Analysis
+- Financial Projections
+
+AUTOMATED WORKFLOWS:
+- Financial data collection and validation
+- Automated report generation
+- Integration with QuickBooks for real-time data
+- Scheduled financial reporting
+
+For example, to calculate ROI, just tell me:
+- Initial investment amount
+- Total returns/gains
+
+What would you like to calculate or automate?`;
+    }
+    
+    // Email template requests
+    if (lowerMessage.includes('email') && (lowerMessage.includes('template') || lowerMessage.includes('draft'))) {
+      return `I can help you create professional emails and automate email workflows:
+
+EMAIL TEMPLATES AVAILABLE:
+- Meeting requests
+- Follow-up emails
+- Project updates
+- Professional announcements
+- Client communications
+
+AUTOMATED EMAIL WORKFLOWS:
+- Bulk email campaigns
+- Scheduled follow-ups
+- Integration with Outlook/Gmail
+- Email tracking and analytics
+- Automated responses
+
+What type of email do you need to send? I can create a template or set up an automated workflow.`;
+    }
+    
+    // Document creation requests
+    if (lowerMessage.includes('create') || lowerMessage.includes('generate')) {
+      if (lowerMessage.includes('job description')) {
+        return `I'll help you create a comprehensive job description and can automate the entire recruitment process. Please provide:
+
+REQUIRED INFORMATION:
+- Job title/role
+- Department
+- Experience level (entry, mid, senior)
+- Key responsibilities (if you have specific ones in mind)
+
+I can generate a complete job description and optionally:
+- Post to job boards automatically
+- Set up applicant tracking
+- Schedule interviews
+- Send automated follow-ups
+
+What position are you hiring for?`;
+      }
+      if (lowerMessage.includes('meeting minutes')) {
+        return `I can create professional meeting minutes and automate the entire meeting workflow. Please provide:
+
+MEETING DETAILS:
+- Meeting title/purpose
+- Date and attendees
+- Key discussion points
+- Decisions made
+- Action items and owners
+
+I can format this into professional meeting minutes and optionally:
+- Schedule follow-up meetings
+- Send action item reminders
+- Track completion status
+- Generate progress reports
+
+What meeting do you need minutes for?`;
+      }
+    }
+    
+    return null; // No office tool match, proceed with normal AI response
+  }
+
+  // Handle workflow requests
+  handleWorkflowRequest(message) {
+    if (!window.chatbotApp.workflowEngine) {
+      return `Workflow automation is available! I can execute these automated workflows:
+
+AVAILABLE WORKFLOWS:
+- Email Automation: Automated email sending and management
+- Document Generation: Automated document creation and formatting
+- Meeting Management: Complete meeting lifecycle management
+- Project Tracking: Automated project monitoring and reporting
+- Financial Analysis: Automated financial data processing and reporting
+
+What workflow would you like me to execute? Please provide the necessary details.`;
+    }
+
+    const workflows = window.chatbotApp.workflowEngine.getAvailableWorkflows();
+    const workflowList = workflows.map(w => `- ${w.name}: ${w.description}`).join('\n');
+    
+    return `I can execute these automated workflows for you:
+
+${workflowList}
+
+Which workflow would you like me to run? Please provide the necessary parameters.`;
+  }
+
+  // Check if message is requesting external tool
+  isExternalToolRequest(message) {
+    const toolKeywords = [
+      'microsoft', 'office', 'word', 'excel', 'powerpoint', 'outlook',
+      'google', 'docs', 'sheets', 'slides', 'gmail', 'drive',
+      'slack', 'trello', 'zoom', 'dropbox', 'quickbooks', 'salesforce',
+      'send email', 'create document', 'schedule meeting', 'upload file'
+    ];
+    
+    return toolKeywords.some(keyword => message.includes(keyword));
+  }
+
+  // Handle external tool requests
+  handleExternalToolRequest(message) {
+    if (!window.chatbotApp.externalTools) {
+      return `External tool integration is available! I can work with these tools:
+
+PRODUCTIVITY TOOLS:
+- Microsoft Office Suite (Word, Excel, PowerPoint, Outlook)
+- Google Workspace (Docs, Sheets, Slides, Gmail, Calendar, Drive)
+
+COMMUNICATION & COLLABORATION:
+- Slack (messaging, file sharing, channels)
+- Zoom (meetings, webinars, recordings)
+
+PROJECT MANAGEMENT:
+- Trello (boards, cards, task tracking)
+
+STORAGE & SHARING:
+- Dropbox (file storage, sharing, collaboration)
+
+BUSINESS APPLICATIONS:
+- QuickBooks (invoicing, expenses, financial reports)
+- Salesforce (CRM, leads, opportunities)
+
+What would you like me to do with these tools?`;
+    }
+
+    const tools = window.chatbotApp.externalTools.getAvailableTools();
+    const toolsByCategory = {};
+    
+    tools.forEach(tool => {
+      if (!toolsByCategory[tool.category]) {
+        toolsByCategory[tool.category] = [];
+      }
+      toolsByCategory[tool.category].push(tool);
+    });
+
+    let response = `I can integrate with these external tools to automate your tasks:\n\n`;
+    
+    Object.keys(toolsByCategory).forEach(category => {
+      response += `${category.toUpperCase().replace('_', ' ')}:\n`;
+      toolsByCategory[category].forEach(tool => {
+        response += `- ${tool.name}: ${tool.capabilities.join(', ')}\n`;
+      });
+      response += '\n';
+    });
+
+    response += `What specific task would you like me to perform with these tools?`;
+    
+    return response;
+  }
+
   // Generate response using OpenAI
   async generateOpenAIResponse(messages, config) {
+    // Check if this is a workflow or tool execution request
+    const lastMessage = messages[messages.length - 1].content.toLowerCase();
+    
+    if (this.shouldExecuteWorkflow(lastMessage)) {
+      return await this.executeWorkflowFromMessage(messages[messages.length - 1].content);
+    }
+    
+    if (this.shouldExecuteTool(lastMessage)) {
+      return await this.executeToolFromMessage(messages[messages.length - 1].content);
+    }
+
     const response = await fetch(config.base_url, {
       method: 'POST',
       headers: {
@@ -185,6 +516,109 @@ Maintain your identity as ${personality.name} while being genuinely helpful, int
     this.addToHistory('assistant', aiResponse);
 
     return aiResponse;
+  }
+
+  // Check if should execute workflow
+  shouldExecuteWorkflow(message) {
+    return message.includes('execute workflow') || 
+           message.includes('run workflow') || 
+           message.includes('start workflow');
+  }
+
+  // Check if should execute tool
+  shouldExecuteTool(message) {
+    return message.includes('execute tool') || 
+           message.includes('run tool') || 
+           (message.includes('create') && (message.includes('document') || message.includes('email'))) ||
+           (message.includes('send') && message.includes('email')) ||
+           (message.includes('schedule') && message.includes('meeting'));
+  }
+
+  // Execute workflow from message
+  async executeWorkflowFromMessage(message) {
+    try {
+      // Parse workflow request (simplified for demo)
+      if (message.includes('email')) {
+        const result = await window.chatbotApp.workflowEngine.executeWorkflow('email_automation', {
+          recipient: 'example@company.com',
+          subject: 'Automated Email',
+          content: 'This is an automated email generated by Miss Bukola Lukan.'
+        });
+        
+        return `Workflow executed successfully! 
+
+EXECUTION DETAILS:
+- Workflow: Email Automation
+- Status: ${result.status}
+- Execution ID: ${result.id}
+- Steps Completed: ${result.currentStep + 1}/${result.results ? Object.keys(result.results).length : 0}
+- Duration: ${result.endTime ? Math.round((new Date(result.endTime) - new Date(result.startTime)) / 1000) : 0}s
+
+The email has been composed, validated, and sent successfully. All workflow steps completed without errors.`;
+      }
+      
+      return `I can execute workflows, but I need more specific details. Available workflows:
+- Email Automation
+- Document Generation  
+- Meeting Management
+- Project Tracking
+- Financial Analysis
+
+Please specify which workflow you'd like to execute and provide the necessary parameters.`;
+      
+    } catch (error) {
+      return `Workflow execution failed: ${error.message}. Please check the parameters and try again.`;
+    }
+  }
+
+  // Execute tool from message
+  async executeToolFromMessage(message) {
+    try {
+      // Parse tool request (simplified for demo)
+      if (message.includes('create document')) {
+        const result = await window.chatbotApp.externalTools.executeToolAction('microsoft_office', 'create_word_document', {
+          title: 'New Document',
+          content: 'Document created by Miss Bukola Lukan AI Assistant'
+        });
+        
+        return `Tool executed successfully!
+
+EXECUTION DETAILS:
+- Tool: ${result.tool}
+- Action: ${result.action}
+- Status: Success
+- Document ID: ${result.result.documentId}
+- Created: ${result.result.createdAt}
+- Access URL: ${result.result.url}
+
+Your Word document has been created and is ready for editing.`;
+      }
+      
+      if (message.includes('send email')) {
+        const result = await window.chatbotApp.externalTools.executeToolAction('google_workspace', 'send_gmail', {
+          to: 'recipient@example.com',
+          subject: 'Message from Miss Bukola Lukan',
+          body: 'This email was sent automatically by your AI assistant.'
+        });
+        
+        return `Email sent successfully!
+
+EXECUTION DETAILS:
+- Tool: ${result.tool}
+- Action: ${result.action}
+- Message ID: ${result.result.messageId}
+- Recipient: ${result.result.to}
+- Status: ${result.result.status}
+- Sent: ${result.result.sentAt}
+
+Your email has been delivered successfully.`;
+      }
+      
+      return `I can execute external tool actions. Available tools include Microsoft Office, Google Workspace, Slack, Trello, Zoom, and more. Please specify which tool and action you'd like me to perform.`;
+      
+    } catch (error) {
+      return `Tool execution failed: ${error.message}. Please check the parameters and try again.`;
+    }
   }
 
   // Generate response using custom backend

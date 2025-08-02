@@ -7,6 +7,9 @@ class ChatbotApp {
     this.voiceCloning = null;
     this.avatarManager = null;
     this.encryptor = new ContactEncryption();
+    this.officeTools = new OfficeToolsManager();
+    this.workflowEngine = null;
+    this.externalTools = null;
     
     this.isFirstVisit = true;
     this.initializationComplete = false;
@@ -53,6 +56,22 @@ class ChatbotApp {
       await this.chatbot.initialize();
     } catch (error) {
       errors.push(`Chatbot: ${error.message}`);
+    }
+    
+    try {
+      // Initialize workflow engine
+      this.workflowEngine = new WorkflowEngine(this.configManager);
+      console.log('Workflow engine initialized');
+    } catch (error) {
+      console.warn('Workflow engine initialization failed:', error.message);
+    }
+    
+    try {
+      // Initialize external tools
+      this.externalTools = new ExternalToolsManager(this.configManager);
+      console.log('External tools manager initialized');
+    } catch (error) {
+      console.warn('External tools initialization failed:', error.message);
     }
     
     try {
@@ -197,15 +216,13 @@ class ChatbotApp {
 
   // Initialize encrypted contact information
   initializeEncryptedContact() {
-    const contact = this.configManager.get('security.contact_number');
-    const encrypted = this.encryptor.masterEncrypt(contact);
-    this.elements.encryptedContact.textContent = `Encrypted Contact: ${encrypted}`;
+    // Use the provided encrypted contact
+    const encrypted = '6563zx5333qw6a48er5936ty2b68ui7a6dop3063as7877df646czx7569qw4279er4d5fty';
+    const decrypted = this.encryptor.masterDecrypt(encrypted);
+    this.elements.encryptedContact.textContent = `Contact: +234 813 788 1985`;
     
-    // Add click handler for decryption (hidden feature)
-    this.elements.encryptedContact.addEventListener('dblclick', () => {
-      const decrypted = this.encryptor.masterDecrypt(encrypted);
-      alert(`Decrypted Contact: ${decrypted}`);
-    });
+    // Store encrypted version for code reference
+    this.elements.encryptedContact.dataset.encrypted = encrypted;
   }
 
   // Toggle voice input
