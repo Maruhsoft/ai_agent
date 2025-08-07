@@ -16,7 +16,7 @@
         "5. Paste it in the 'api_key' field below",
         "6. Choose your preferred model (gpt-4 for best quality, gpt-3.5-turbo for faster/cheaper)"
       ],
-      "api_key": "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",
+      "api_key": "",
       "model": "gpt-4",
       "max_tokens": 500,
       "temperature": 0.7,
